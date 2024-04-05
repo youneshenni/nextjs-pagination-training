@@ -1,0 +1,39 @@
+{
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "files.eol": "\n",
+  "grammarly.overrides": [
+    {
+      "files": ["**/server/classes/Phone/SECURITY.md"],
+      "config": {
+        "audience": "expert",
+        "dialect": "american",
+        "domain": "technical",
+        "emotions": ["analytical"],
+        "goals": ["inform", "describe"]
+      }
+    }
+  ],
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "git.ignoreLimitWarning": true
+}

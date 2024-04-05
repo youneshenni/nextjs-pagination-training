@@ -1,0 +1,137 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://flexy.siraj-dev.tk/api
+paths:
+  /phones:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  phones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: string
+                          description: SIM card's MSISDN
+                        balance:
+                          type: number
+                          description: SIM card's balance
+                  virtual_balance:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        balance:
+                          type: number
+                          description: Current user's balance for the current operator
+                        operator:
+                          type: string
+                          enum:
+                            - "5"
+                            - "6"
+                            - "7"
+              example:
+                phones:
+                  - number: "0656321407"
+                    balance: 2000
+                virtual_balance:
+                  - operator: "5"
+                    balance: 5000
+        500:
+          description: Internal Server Error
+  /flexy:
+    post:
+      responses:
+        '201':
+          description: Created
+        401:
+          description: User not authenticated
+        500:
+          description: Credit not found
+        403:
+          description: Transfer limit by this account exceeded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:  
+                  limit:
+                    type: number
+                    description: Account's transfer limit
+                  total:
+                    type: number
+                    description: Current credit + limit
+                  sum:
+                    type: number
+                    description: Operation's cost
+                  info:
+                    type: string
+                    enum:
+                      - Transfer limit by this account exceeded
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - destination
+                - sender
+                - sum
+              properties:
+                type:
+                  type: number
+                  minimum: 0
+                  description: Operation type (Refer to request_types)
+                destination:
+                  type: number
+                  minimum: 0
+                  maxLength: 10
+                  minLength: 10
+                  description: Destination number (MSISDN)
+                sender:
+                  type: string
+                  maxLength: 10
+                  minLength: 10
+                  description: Sender number (MSISDN)
+                sum:
+                  type: number
+                  minimum: 30
+                  maximum: 100000
+                  description: Amount to be transferred
+                offer:
+                  type: number
+                  description: Offer in Ooredoo or Djezzy (Refer to request_types)
+              example:
+                type: 21
+                destination: "0656321407"
+                sender: "0641477558"
+                sum: 40
+                offer: 2
+  /resend:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  minimum: 0
+      responses:
+        201:
+          description: Created
+        400:
+          description: Transaction ID {ID} doesn't exist
